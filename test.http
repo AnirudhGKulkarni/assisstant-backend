@@ -1,0 +1,15 @@
+### Upload a document
+POST http://localhost:5000/upload
+Content-Type: application/json
+
+{
+  "text": "Our team fixed the login bug by rolling back the Stripe API."
+}
+
+### Ask a question
+POST http://localhost:5000/ask
+Content-Type: application/json
+
+{
+  "question": "How did we fix the login bug?"
+}
