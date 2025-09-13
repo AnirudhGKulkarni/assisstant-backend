@@ -2,10 +2,9 @@
 .env
 .env.local
 
-# Dependency folders
+# Dependencies
 node_modules/
 venv/
-.env/
 __pycache__/
 
 # Logs
