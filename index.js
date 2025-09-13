@@ -3,19 +3,15 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 
+dotenv.config();
+
 const app = express();
 
-app.use(cors({ origin: "https://anirudhgkulkarni.github.io/assisstant-frontend" }));
-
-dotenv.config(); // Load .env variables
-
-app.use(cors());
+app.use(cors({ origin: "https://assisstant-frontend.vercel.app" })); // update with your Vercel frontend domain
 app.use(express.json());
 
-// API endpoint for AI chat
 app.post('/api/ask', async (req, res) => {
   const { question } = req.body;
-
   if (!question || question.trim() === '') {
     return res.json({ answer: 'Please provide a valid question.' });
   }
@@ -28,30 +24,22 @@ app.post('/api/ask', async (req, res) => {
         'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo', // or "gpt-3.5-turbo" if you don't have GPT-4 access
+        model: 'gpt-3.5-turbo',
         messages: [{ role: 'user', content: question }],
       }),
     });
 
     const data = await response.json();
-
-    if (!data.choices || !data.choices[0].message) {
-      throw new Error('Invalid response from OpenAI API');
-    }
-
-    res.json({ answer: data.choices[0].message.content });
+    res.json({ answer: data.choices?.[0]?.message?.content || "No response from AI." });
   } catch (err) {
-    console.error('OpenAI API error:', err);
-    res.json({ answer: 'Error fetching AI response.' });
+    console.error("OpenAI API error:", err);
+    res.json({ answer: "Error fetching AI response." });
   }
 });
 
-// Start backend server
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-app.listen(PORT, "0.0.0.0", () => console.log(`Server running on port ${PORT}`));
-});
 app.get("/", (req, res) => {
   res.send("✅ Backend is working");
 });
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, "0.0.0.0", () => console.log(`Server running on port ${PORT}`));
