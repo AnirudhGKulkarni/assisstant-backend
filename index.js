@@ -3,6 +3,9 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 
+import cors from "cors"; // or const cors = require('cors');
+app.use(cors({ origin: "https://anirudhgkulkarni.github.io/assisstant-frontend/" }));
+
 dotenv.config(); // Load .env variables
 
 const app = express();
