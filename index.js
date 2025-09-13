@@ -3,12 +3,11 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 
-app.use(cors({ origin: "https://anirudhgkulkarni.github.io/assisstant-frontend/" }));
-
-dotenv.config(); // Load .env variables
-
 const app = express();
 
+app.use(cors({ origin: "https://anirudhgkulkarni.github.io/assisstant-frontend" }));
+
+dotenv.config(); // Load .env variables
 
 app.use(cors());
 app.use(express.json());
